@@ -2,50 +2,66 @@ import {
   Component,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  ElementRef,
+  Renderer2,
+  ViewChild
 } from '@angular/core';
+import { elementAt } from 'rxjs';
 
 @Component({
   selector: 'app-square',
   standalone: true,
   imports: [],
-  templateUrl: './square.component.html',
-  styleUrl: './square.component.css'
+  template: `
+    <div [style]="getStyle()" #myDiv (mouseover)="highlightSquare()" (mouseleave)="resetSquareHighlight()">
+      <img [alt]="getAlt()" [src]="getPiece()" width="80" height="80" />
+    </div>
+  `,
+  //templateUrl: './square.component.html',
+  //styleUrl: './square.component.css'
 })
-
 export class SquareComponent {
+  _backgroundColor: string = '';
+  _isClicked: boolean;
+  _isHovered: boolean;
+  @Input() white: boolean;
+  @Input() gamePiece: string;
   @Output() canMoveEvent = new EventEmitter<boolean>();
+
+  constructor(private renderer: Renderer2) {
+    this.white = true;
+    this.gamePiece = "bp";
+    this._isClicked = false;
+    this._isHovered = false;
+  }
+
+  @ViewChild('myDiv', { static: true }) myDiv: ElementRef | undefined;
+
+  highlightSquare() {
+    this._isHovered = true;
+    this.renderer.setStyle(this.myDiv?.nativeElement, 'background-color', 'cyan');
+  }
+
+  resetSquareHighlight() {
+    this._isHovered = false;
+    this.renderer.setStyle(this.myDiv?.nativeElement, 'background-color', this._backgroundColor);
+  }
+
   canMove() {
     this.canMoveEvent.emit(true);
   }
 
-  constructor() {
-    this.white = true;
-    this.gamePiece = "bp";
-    this.position = "";
-  }
-
-  @Input() position: string;
-  getPosition() {
-    return "";
-  }
-
-  @Input() white: boolean;
   getStyle() {
     if (this.white == false) {
-      return {
-        backgroundColor: 'green',
-        color: 'white'
-      }
+      this._backgroundColor = 'green';
+      return { 'background-color': 'green' };
     } else {
-      return {
-        backgroundColor: 'lightgrey',
-        color: 'black',
-      }
+      this._backgroundColor = 'lightgrey';
+      return { 'background-color': 'lightgrey' };
     }
   }
 
-  @Input() gamePiece: string;
   getPiece() {
     if (this.gamePiece == "bp") { return "./blackpawn.png"; }
     if (this.gamePiece == "wp") { return "./whitepawn.png"; }

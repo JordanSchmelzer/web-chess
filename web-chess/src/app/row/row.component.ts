@@ -38,7 +38,6 @@ export class RowComponent {
   getSquarePiece(i: number) {
     return this.gameState[i];
   }
-
   getSquareColor() {
     return
   }
