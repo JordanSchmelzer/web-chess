@@ -11,6 +11,7 @@ import { GameComponent } from "./game/game.component";
 
   `
 })
+
 export class AppComponent {
   title = 'web-chess';
 }

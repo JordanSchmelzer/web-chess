@@ -1,10 +1,26 @@
 <div class="grid-container">
-    <app-square [white]="getBackgroundColor(this.boardRow, 0)" [gamePiece]="getSquarePiece(0)" />
-    <app-square [white]="getBackgroundColor(this.boardRow, 1)" [gamePiece]="getSquarePiece(1)" />
-    <app-square [white]="getBackgroundColor(this.boardRow, 2)" [gamePiece]="getSquarePiece(2)" />
-    <app-square [white]="getBackgroundColor(this.boardRow, 3)" [gamePiece]="getSquarePiece(3)" />
-    <app-square [white]="getBackgroundColor(this.boardRow, 4)" [gamePiece]="getSquarePiece(4)" />
-    <app-square [white]="getBackgroundColor(this.boardRow, 5)" [gamePiece]="getSquarePiece(5)" />
-    <app-square [white]="getBackgroundColor(this.boardRow, 6)" [gamePiece]="getSquarePiece(6)" />
-    <app-square [white]="getBackgroundColor(this.boardRow, 7)" [gamePiece]="getSquarePiece(7)" />
+    <app-square [rowLocation]=this.boardRow [columnLocation]=0 [white]="getBackgroundColor(this.boardRow, 0)"
+        [gamePiece]="getSquarePiece(0)">
+    </app-square>
+    <app-square [rowLocation]=this.boardRow [columnLocation]=1 [white]="getBackgroundColor(this.boardRow, 1)"
+        [gamePiece]="getSquarePiece(1)">
+    </app-square>
+    <app-square [rowLocation]=this.boardRow [columnLocation]=2 [white]="getBackgroundColor(this.boardRow, 2)"
+        [gamePiece]="getSquarePiece(2)">
+    </app-square>
+    <app-square [rowLocation]=this.boardRow [columnLocation]=3 [white]="getBackgroundColor(this.boardRow, 3)"
+        [gamePiece]="getSquarePiece(3)">
+    </app-square>
+    <app-square [rowLocation]=this.boardRow [columnLocation]=4 [white]="getBackgroundColor(this.boardRow, 4)"
+        [gamePiece]="getSquarePiece(4)">
+    </app-square>
+    <app-square [rowLocation]=this.boardRow [columnLocation]=5 [white]="getBackgroundColor(this.boardRow, 5)"
+        [gamePiece]="getSquarePiece(5)">
+    </app-square>
+    <app-square [rowLocation]=this.boardRow [columnLocation]=6 [white]="getBackgroundColor(this.boardRow, 6)"
+        [gamePiece]="getSquarePiece(6)">
+    </app-square>
+    <app-square [rowLocation]=this.boardRow [columnLocation]=7 [white]="getBackgroundColor(this.boardRow, 7)"
+        [gamePiece]="getSquarePiece(7)">
+    </app-square>
 </div>

@@ -1,0 +1,22 @@
+/* yoinked from here: https://www.youtube.com/watch?v=QGV2jMyMoQA */
+
+.game-title {
+    background-color: aquamarine;
+}
+
+.game-title:hover {
+
+    /*cursor: -webkit-grabbing;*/
+    background-image: linear-gradient(to right,
+            hsl(153, 71%, 59%),
+            hsl(0, 0%, 14%),
+            hsl(0, 0%, 8%),
+            hsl(153, 71%, 59%));
+    animation: slidebg 10s linear forwards;
+}
+
+@keyframes slidebg {
+    to {
+        background-position: 200vw;
+    }
+}
