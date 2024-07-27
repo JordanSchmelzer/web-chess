@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GameComponent } from "./game/game.component";
-import { ToolBarComponent } from "./tool-bar/tool-bar.component";
+import { GameComponent } from './modules/game/game.component';
+import { ToolBarComponent } from './modules/tool-bar/tool-bar.component';
 
 @Component({
   selector: 'app-root',

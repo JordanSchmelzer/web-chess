@@ -47,14 +47,7 @@ export class ChessBoard {
     // for each row, look at each piece and convert it to FENChar or null
     public get ChessBoardView(): (FENChar | null)[][] {
         return this.chessBoard.map(row => {
-            return row.map(piece => {
-                if (piece instanceof Piece == true) {
-                    return piece.FENChar;
-                } else {
-                    return null;
-                }
-            }
-        });
+            return row.map(piece => piece instanceof Piece ? piece.FENChar : null);
+        })
     }
-
 }
