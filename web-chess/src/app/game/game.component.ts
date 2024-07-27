@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { BoardComponent } from '../board/board.component';
 
 @Component({
@@ -9,22 +9,47 @@ import { BoardComponent } from '../board/board.component';
   styleUrl: './game.component.css'
 })
 export class GameComponent {
+  whiteTurn: boolean;
+  gameState: string[][];
+  winner: string;
+
   constructor() {
-    this.gameState = [
-      ["br", "bkn", "bb", "bq", "bk", "bb", "bkn", "br"],
-      ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", "", "", ""],
-      ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
-      ["wr", "wkn", "wb", "wq", "wk", "wb", "wkn", "wr"]
-    ]
+    this.whiteTurn = true;
+    this.gameState = [];
+    this.winner = "";
   }
 
-  gameState: string[][];
   getBoardState() {
     console.info(this.gameState[0]);
     return this.gameState;
   }
+
+  get player() {
+    if (this.whiteTurn == true) {
+      return "white"
+    } else {
+      return "black"
+    }
+  }
+
+  ngOnInit() {
+    this.newGame();
+  }
+
+  newGame() {
+    this.whiteTurn = true;
+    this.gameState = [
+      ["r", "n", "b", "q", "k", "b", "n", "r"],
+      ["p", "p", "p", "p", "p", "p", "p", "p"],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["P", "P", "P", "P", "P", "P", "P", "P"],
+      ["R", "N", "B", "Q", "K", "B", "N", "R"]
+    ];
+  }
+
+
+
 }

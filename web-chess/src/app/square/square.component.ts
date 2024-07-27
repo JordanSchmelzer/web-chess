@@ -43,28 +43,25 @@ export class SquareComponent {
   @ViewChild('myDiv', { static: true }) myDiv: ElementRef | undefined;
   handleClick() {
     // if this is active player's piece, let them select it
-    if (this._isClicked == false && this.gamePiece != "") {
+    if (this._isClicked == false &&
+      this.gamePiece != "" &&
+      this._informBoardService.startGamePiece == "") {
+
       this._isClicked = true;
       this._renderer.setStyle(this.myDiv?.nativeElement, 'background-color', 'red');
-      // Let board know piece being moved
-      this._informBoardService.sourcePosition = `Selected Row: ${this.rowLocation}, Selected Col: ${this.columnLocation}`;
-      this._informBoardService.sourceGamePiece = `Selected Piece: ${this.gamePiece}`
-      // TODO: highlight valid squares for the player to move
-      // Un-select the selected piece
+      this._informBoardService.startMove(this.rowLocation,
+        this.columnLocation,
+        this.gamePiece);
+
     } else if (this._isClicked == true && this.gamePiece != "") {
       this._isClicked = false;
-
       this._renderer.setStyle(this.myDiv?.nativeElement, 'background-color', this._backgroundColor);
-      // Let the board know a piece is no longer being moved
-      this._informBoardService
+      this._informBoardService.cancelMove();
+    } else if (this._isClicked == false &&
+      this._informBoardService.startGamePiece != ""
+    ) {
+      this.gamePiece = this._informBoardService.startGamePiece;
     }
-    // TODO: handle move to new square
-    // Need active selected piece location
-
-
-    // how much of this should be handled by the service?
-    // we have to check if the target is an empty board cell or an enemy cell
-    // we have to check to see if another cell on the board is clicked
   }
 
   getStyle() {
@@ -77,34 +74,34 @@ export class SquareComponent {
     }
   }
   getPiece() {
-    if (this.gamePiece == "bp") { return "./blackpawn.png"; }
-    if (this.gamePiece == "wp") { return "./whitepawn.png"; }
-    if (this.gamePiece == "wk") { return "./whiteking.png"; }
-    if (this.gamePiece == "bk") { return "./blackking.png"; }
-    if (this.gamePiece == "wq") { return "./whitequeen.png"; }
-    if (this.gamePiece == "bq") { return "./blackqueen.png"; }
-    if (this.gamePiece == "wkn") { return "./whiteknight.png"; }
-    if (this.gamePiece == "br") { return "./blackrook.png"; }
-    if (this.gamePiece == "bkn") { return "./blackknight.png"; }
-    if (this.gamePiece == "wr") { return "./whiterook.png"; }
-    if (this.gamePiece == "bb") { return "./blackbishop.png"; }
-    if (this.gamePiece == "wb") { return "./whitebishop.png"; }
+    if (this.gamePiece == "P") { return "./whitepawn.png"; }
+    if (this.gamePiece == "p") { return "./blackpawn.png"; }
+    if (this.gamePiece == "K") { return "./whiteking.png"; }
+    if (this.gamePiece == "k") { return "./blackking.png"; }
+    if (this.gamePiece == "Q") { return "./whitequeen.png"; }
+    if (this.gamePiece == "q") { return "./blackqueen.png"; }
+    if (this.gamePiece == "N") { return "./whiteknight.png"; }
+    if (this.gamePiece == "n") { return "./blackknight.png"; }
+    if (this.gamePiece == "R") { return "./whiterook.png"; }
+    if (this.gamePiece == "r") { return "./blackrook.png"; }
+    if (this.gamePiece == "B") { return "./whitebishop.png"; }
+    if (this.gamePiece == "b") { return "./blackbishop.png"; }
     if (this.gamePiece == "") { return "./Empty.png"; }
     return "";
   }
   getAlt() {
-    if (this.gamePiece == "bp") { return "Black Pawn"; }
-    if (this.gamePiece == "wp") { return "White Pawn"; }
-    if (this.gamePiece == "wk") { return "White King"; }
-    if (this.gamePiece == "bk") { return "Black King"; }
-    if (this.gamePiece == "wq") { return "White Queen"; }
-    if (this.gamePiece == "bq") { return "Black Queen"; }
-    if (this.gamePiece == "wkn") { return "White Knight"; }
-    if (this.gamePiece == "bkn") { return "Black Knight"; }
-    if (this.gamePiece == "br") { return "Black Rook"; }
-    if (this.gamePiece == "wr") { return "White Rook"; }
-    if (this.gamePiece == "bb") { return "Black Bishop"; }
-    if (this.gamePiece == "wb") { return "White Bishop"; }
+    if (this.gamePiece == "P") { return "White Pawn"; }
+    if (this.gamePiece == "p") { return "Black Pawn"; }
+    if (this.gamePiece == "K") { return "White King"; }
+    if (this.gamePiece == "k") { return "Black King"; }
+    if (this.gamePiece == "Q") { return "White Queen"; }
+    if (this.gamePiece == "q") { return "Black Queen"; }
+    if (this.gamePiece == "N") { return "White Knight"; }
+    if (this.gamePiece == "n") { return "Black Knight"; }
+    if (this.gamePiece == "R") { return "White Rook"; }
+    if (this.gamePiece == "r") { return "Black Rook"; }
+    if (this.gamePiece == "B") { return "White Bishop"; }
+    if (this.gamePiece == "b") { return "Black Bishop"; }
     if (this.gamePiece == "") { return "Empty"; }
     return "Empty";
   }

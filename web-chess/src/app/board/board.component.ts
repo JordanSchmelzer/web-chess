@@ -17,8 +17,7 @@ import { InformBoardOfClickService } from '../square/inform-board-of-click.servi
       <app-row [gameState]="getBoardState(6)" [boardRow]="getRowNumber(6)" />
       <app-row [gameState]="getBoardState(7)" [boardRow]="getRowNumber(7)" />
     </div>
-    <p>{{_informBoardOfClick.sourcePosition}}</p>
-    <p>{{_informBoardOfClick.sourceGamePiece}}</p>
+    <p>{{_informBoardOfClick.startGamePiece}}</p>
   `,
   styleUrl: './board.component.css'
 })

@@ -1,0 +1,11 @@
+.wrapper {
+    width: calc(100% - 3.75rem);
+}
+
+.footer {
+    background-color: aquamarine;
+}
+
+.bg-less-dark {
+    background-color: hsl(0, 4%, 82%);
+}
