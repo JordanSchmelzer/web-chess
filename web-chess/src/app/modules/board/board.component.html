@@ -1,12 +1,9 @@
-<p appSquareTraversal>board works!</p>
-<div class="grid-container">
-    <app-row [gameState]="getBoardState(0)" [boardRow]="getRowNumber(0)" />
-    <app-row [gameState]="getBoardState(1)" [boardRow]="getRowNumber(1)" />
-    <app-row [gameState]="getBoardState(2)" [boardRow]="getRowNumber(2)" />
-    <app-row [gameState]="getBoardState(3)" [boardRow]="getRowNumber(3)" />
-    <app-row [gameState]="getBoardState(4)" [boardRow]="getRowNumber(4)" />
-    <app-row [gameState]="getBoardState(5)" [boardRow]="getRowNumber(5)" />
-    <app-row [gameState]="getBoardState(6)" [boardRow]="getRowNumber(6)" />
-    <app-row [gameState]="getBoardState(7)" [boardRow]="getRowNumber(7)" />
+<div class="chess-board">
+    <div *ngFor="let row of chessBoardView; let x = index" class="row">
+        <div *ngFor="let piece of row; let y = index" class="square"
+            [ngClass]="{'dark':isSquareDark(x,y), 'light': !isSquareDark(x,y)}">
+
+            <img *ngIf="piece" [src]="pieceImagePaths[piece]" [alt]="piece" class="piece" />
+        </div>
+    </div>
 </div>
-<p>{{_informBoardOfClick.position}}</p>

@@ -34,7 +34,9 @@ export class Pawn extends Piece {
             { x: 1, y: 1 },
             { x: 1, y: -1 }
         ]
-        if (this.pieceColor == Color.Black)
+        if (this.pieceColor == Color.Black) {
+            this.setBlackPawnDirections()
+        }
     }
 
     private setBlackPawnDirections(): void {

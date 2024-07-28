@@ -49,7 +49,4 @@ export class GameComponent {
       ["R", "N", "B", "Q", "K", "B", "N", "R"]
     ];
   }
-
-
-
 }

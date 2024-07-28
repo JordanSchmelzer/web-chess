@@ -2,3 +2,36 @@
     display: grid;
     grid-template-columns: auto;
 }
+
+.chess-board {
+    display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+}
+
+.square {
+    display: flex;
+    justify-content: center;
+    height: 80px;
+    width: 80px;
+    cursor: pointer;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.piece {
+    width: 70px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.dark {
+    background-color: green;
+}
+
+.light {
+    background-color: lightgray;
+}

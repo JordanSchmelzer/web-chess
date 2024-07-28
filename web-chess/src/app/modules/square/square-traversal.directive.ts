@@ -4,7 +4,9 @@ import {
   Renderer2,
   ElementRef,
 } from '@angular/core';
+
 import { SquareComponent } from './square.component';
+
 @Directive({
   selector: '[appSquareTraversal]',
   standalone: true

@@ -7,12 +7,12 @@ import {
 } from '@angular/core';
 import { SquareTraversalDirective } from './square-traversal.directive';
 import { InformBoardOfClickService } from './inform-board-of-click.service';
-import { DragAndDropPiecesDirective } from './drag-and-drop-pieces.directive';
+
 
 @Component({
   selector: 'app-square',
   standalone: true,
-  imports: [SquareTraversalDirective, DragAndDropPiecesDirective],
+  imports: [SquareTraversalDirective],
   template: `
     <div #myDiv [style]="getStyle()" (click)="handleClick()" appSquareTraversal>
       <img [alt]="getAlt()" [src]="getPiece()" width="80" height="80" />
