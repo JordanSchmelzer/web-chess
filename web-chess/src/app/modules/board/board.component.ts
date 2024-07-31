@@ -43,6 +43,12 @@ export class BoardComponent {
     if (!piece) return;
     if (this.isWrongPieceSelected(piece)) return;
 
+    const isSafeSquareClicked: boolean =
+      !!this.selectedSquare.piece &&
+      this.selectedSquare.x === x &&
+      this.selectedSquare.y === y;
+    this.unmarkPreviouslySelectedAndSafeSquares();
+    if (isSafeSquareClicked) return;
     this.selectedSquare = { piece, x, y };
     this.pieceSafeSquares = this.safeSquares.get(x + "," + y) || [];
   }
@@ -65,10 +71,18 @@ export class BoardComponent {
     const { x: prevX, y: prevY } = this.selectedSquare;
     this.chessBoard.move(prevX, prevY, newX, newY);
     this.chessBoardView = this.chessBoard.ChessBoardView;
+
+    // resets the selected chessboard square and clears safe move dots
+    this.unmarkPreviouslySelectedAndSafeSquares();
   }
 
   public move(x: number, y: number): void {
     this.selectingPiece(x, y);
     this.placingPiece(x, y);
+  }
+
+  private unmarkPreviouslySelectedAndSafeSquares(): void {
+    this.selectedSquare = { piece: null };
+    this.pieceSafeSquares = [];
   }
 }
