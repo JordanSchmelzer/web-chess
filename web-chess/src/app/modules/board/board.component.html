@@ -5,9 +5,11 @@
                     'selected-square': isSquareSelected(x,y)
         }" (click)="move(x,y)">
 
+            <img *ngIf="isMoveEnemyPieceCapture(x,y)" src="./take-icon.png" alt="capture-icon" class="movement-icon" />
             <div [ngClass]="{'safe-square': isSquareSafeForSelectedPiece(x, y)}"></div>
 
             <img *ngIf="piece" [src]="pieceImagePaths[piece]" [alt]="piece" class="piece" />
+
         </div>
     </div>
 </div>

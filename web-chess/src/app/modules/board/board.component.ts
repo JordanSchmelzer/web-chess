@@ -31,7 +31,8 @@ export class BoardComponent {
   }
 
   public isSquareSafeForSelectedPiece(x: number, y: number): boolean {
-    if (this.pieceSafeSquares.some(coords => coords.x === x && coords.y === y)) {
+    const piece: FENChar | null = this.chessBoardView[x][y];
+    if (this.pieceSafeSquares.some(coords => coords.x === x && coords.y === y && !piece)) {
       return true;
     } else {
       return false;
@@ -66,7 +67,12 @@ export class BoardComponent {
 
   private placingPiece(newX: number, newY: number): void {
     if (!this.selectedSquare.piece) return;
-    if (!this.isSquareSafeForSelectedPiece(newX, newY)) return;
+
+    if (!this.isSquareSafeForSelectedPiece(newX, newY)) {
+      if (!this.isMoveEnemyPieceCapture(newX, newY)) {
+        return;
+      }
+    }
 
     const { x: prevX, y: prevY } = this.selectedSquare;
     this.chessBoard.move(prevX, prevY, newX, newY);
@@ -84,5 +90,14 @@ export class BoardComponent {
   private unmarkPreviouslySelectedAndSafeSquares(): void {
     this.selectedSquare = { piece: null };
     this.pieceSafeSquares = [];
+  }
+
+  public isMoveEnemyPieceCapture(x: number, y: number): boolean {
+    const piece: FENChar | null = this.chessBoardView[x][y];
+    if (this.pieceSafeSquares.some(coords => coords.x === x && coords.y === y) && piece) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
