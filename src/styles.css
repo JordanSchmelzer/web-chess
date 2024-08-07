@@ -1,0 +1,27 @@
+:root {
+    --transition: 500ms ease-in-out;
+    --invalid: hsl(7, 100%, 68%);
+    --accent: hsl(153, 71%, 59%);
+    --bg-body: hsl(0, 0%, 8%);
+    --bg-body-2: hsl(0, 0%, 14%);
+    --text1: hsl(0, 0%, 100%);
+    --text2: hsl(0, 0%, 85%);
+    --fs-18: 1.125rem;
+    --container: 70rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background-color: var(--bg-body-2);
+
+}
+
+body {
+    margin: 0;
+}

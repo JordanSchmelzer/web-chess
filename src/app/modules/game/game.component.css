@@ -1,0 +1,29 @@
+/* yoinked from here: https://www.youtube.com/watch?v=QGV2jMyMoQA */
+.game-title {
+    background-color: aquamarine;
+}
+
+.game-title:hover {
+
+    /*cursor: -webkit-grabbing;*/
+    background-image: linear-gradient(to right,
+            hsl(153, 59%, 70%),
+            hsl(153, 68%, 63%),
+            hsl(153, 84%, 48%),
+            hsl(153, 84%, 48%),
+            hsl(153, 59%, 70%),
+            hsl(153, 68%, 63%),
+            hsl(153, 59%, 70%));
+    animation: slidebg 10s linear forwards;
+}
+
+@keyframes slidebg {
+    to {
+        background-position: 200vw;
+    }
+}
+
+.player-status {
+    color: rgb(230, 213, 213);
+    font-size: 18px;
+}

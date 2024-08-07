@@ -1,0 +1,100 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: auto;
+}
+
+.rotated {
+    transform: rotate(180deg);
+}
+
+.chess-board {
+    display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+}
+
+.square {
+    display: flex;
+    justify-content: center;
+    height: 80px;
+    width: 80px;
+    cursor: pointer;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.piece {
+    width: 70px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.dark {
+    background-color: green;
+}
+
+.light {
+    background-color: lightgray;
+}
+
+.safe-square {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background-color: #6aaefd;
+    border-radius: 50%;
+    z-index: 100;
+}
+
+.selected-square {
+    box-shadow: inset rgba(60, 70, 85, 0.5) 0px 0px 40px 0px, inset rgba(60, 70, 85, 0.5) 0px 0px 40px 0px, inset rgba(0, 0, 0, 1) 0px 0px 36px -24px;
+}
+
+.movement-icon {
+    width: 40px;
+    position: absolute;
+    filter: sepia();
+}
+
+.last-move {
+    box-shadow: inset rgb(27, 67, 153) 0px 0px 10px 0px, inset rgb(18, 64, 192) 0px 0px 40px 0px, inset rgb(0, 0, 0) 0px 0px 36px -24px;
+
+}
+
+.king-in-check {
+    box-shadow: inset rgb(209, 30, 7) 0px 0px 10px 0px, inset rgb(218, 18, 18) 0px 0px 40px 0px, inset rgb(0, 0, 0) 0px 0px 36px -24px;
+    background-image: url(../../../../public/king-kill-icon.png);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: top 5px left 5px;
+}
+
+.promotion-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 100px;
+}
+
+.promotion-dialog img {
+    height: 70px;
+    cursor: pointer;
+}
+
+.game-over-message {
+    color: white;
+}
+
+.close-promotion-dialog {
+    font-size: 45px;
+    cursor: pointer;
+    color: white;
+}
+
+.promotion-square {
+    box-shadow: inset rgb(216, 231, 2) 0px 0px 40px 0px, inset rgb(0, 98, 150) 0px 0px 40px 0px, inset rgba(0, 0, 0, 1) 0px 0px 36px -24px;
+}

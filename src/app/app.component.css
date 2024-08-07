@@ -1,0 +1,15 @@
+.wrapper {
+    width: 600px;
+}
+
+.footer {
+    background-color: aquamarine;
+}
+
+.bg-less-dark {
+    background-color: hsl(0, 4%, 82%);
+}
+
+.rotated {
+    transform: rotate(180deg);
+}
