@@ -7,5 +7,15 @@
         |__/|__/\___/_.___/   \____/_/ /_/\___/____/____/                          
     </pre>
 </div>
-<p class="player-status">Player's move: {{player}}</p>
-<app-board />
+
+<mat-toolbar>
+    <button mat-button routerLink="/against-friend">
+        Play against friend
+    </button>
+
+    <button mat-button routerLink="/against-computer">
+        Play against computer
+    </button>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
