@@ -4,6 +4,7 @@ import { Color, FENChar, LastMove, pieceImagePaths, SafeSquares, CheckState } fr
 import { NgFor, NgClass, NgIf } from '@angular/common';
 import { SelectedSquare } from './modules';
 import { Coords } from '../../chess-logic/models';
+import { ChessBoardService } from './chess-board.service';
 
 @Component({
   selector: 'app-board',
@@ -30,6 +31,8 @@ export class BoardComponent {
   private promotedPiece: FENChar | null = null;
 
   public flipMode: boolean = false;
+
+  constructor(protected chessBoardService: ChessBoardService) { }
 
   public flipBoard(): void {
     this.flipMode = !this.flipMode;
@@ -128,7 +131,7 @@ export class BoardComponent {
     return this.promotionCoords.x === x && this.promotionCoords.y === y;
   }
 
-  private updateBoard(prevX: number, prevY: number, newX: number, newY: number): void {
+  protected updateBoard(prevX: number, prevY: number, newX: number, newY: number): void {
     this.chessBoard.move(prevX, prevY, newX, newY, this.promotedPiece);
     if (this.promotedPiece) {
       console.info(`Promoted piece selected ${this.promotedPiece}`);

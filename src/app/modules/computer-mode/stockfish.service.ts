@@ -12,7 +12,6 @@ export class StockfishService {
 
   constructor(private http: HttpClient) { }
 
-  /*
   private convertColumnLetterToYCoord(string: string): number {
     return string.charCodeAt(0) - "a".charCodeAt(0);
   }
@@ -51,5 +50,4 @@ export class StockfishService {
         })
       );
   }
-      */
 }
