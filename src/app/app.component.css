@@ -1,5 +1,9 @@
-.wrapper {
-    width: 600px;
+.wrapper {}
+
+.game-vertical {
+    display: grid;
+    grid-template-columns: left;
+    justify-content: center;
 }
 
 .footer {

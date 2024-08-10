@@ -23,6 +23,12 @@
     border: 1px solid black;
 }
 
+.flip-button {
+    height: 30px;
+    width: 100px;
+    background-color: #6aaefd;
+}
+
 .piece {
     width: 70px;
 }

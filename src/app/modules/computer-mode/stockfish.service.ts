@@ -10,9 +10,9 @@ import { FENChar } from '../../chess-logic/models';
 export class StockfishService {
   private readonly api: string = "https://stockfish.online/api/s/v2.php";
 
-
   constructor(private http: HttpClient) { }
 
+  /*
   private convertColumnLetterToYCoord(string: string): number {
     return string.charCodeAt(0) - "a".charCodeAt(0);
   }
@@ -51,4 +51,5 @@ export class StockfishService {
         })
       );
   }
+      */
 }

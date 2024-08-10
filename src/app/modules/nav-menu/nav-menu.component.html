@@ -9,15 +9,14 @@
 </div>
 
 <mat-toolbar>
-    <button mat-button routerLink="/against-friend">
+    <button mat-button class="start-local" routerLink="/against-friend" routerLinkActive="active">
         Play against friend
     </button>
 
-    <button mat-button routerLink="/against-computer">
+    <button mat-button class="start-computer" routerLink="/against-computer" routerLinkActive="active">
         Play against computer
     </button>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
 
-<app-board>
+<router-outlet></router-outlet>

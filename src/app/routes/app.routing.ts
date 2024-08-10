@@ -4,8 +4,8 @@ import { ComputerModeComponent } from "../modules/computer-mode/computer-mode.co
 import { RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
-    { path: "against-friend", component: BoardComponent, title: "Play against friend" },
-    { path: "against-computer", component: ComputerModeComponent, title: "Play against computer" }
+    { path: 'against-friend', component: BoardComponent, title: "Play against friend" },
+    { path: 'against-computer', component: ComputerModeComponent, title: "Play against computer" }
 ]
 
 @NgModule({
