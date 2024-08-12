@@ -5,6 +5,8 @@ import { NgFor, NgClass, NgIf } from '@angular/common';
 import { SelectedSquare } from './modules';
 import { Coords } from '../../chess-logic/models';
 import { ChessBoardService } from './chess-board.service';
+import { Subscription } from 'rxjs';
+import { FENConverter } from '../../chess-logic/FENConverter';
 
 @Component({
   selector: 'app-board',
@@ -31,6 +33,7 @@ export class BoardComponent {
   private promotedPiece: FENChar | null = null;
 
   public flipMode: boolean = false;
+  private subscriptions$ = new Subscription();
 
   constructor(protected chessBoardService: ChessBoardService) { }
 
@@ -123,7 +126,7 @@ export class BoardComponent {
     }
 
     const { x: prevX, y: prevY } = this.selectedSquare;
-    this.updateBoard(prevX, prevY, newX, newY);
+    this.updateBoard(prevX, prevY, newX, newY, this.promotedPiece);
   }
 
   public isSquarepromotionSquare(x: number, y: number): boolean {
@@ -131,17 +134,15 @@ export class BoardComponent {
     return this.promotionCoords.x === x && this.promotionCoords.y === y;
   }
 
-  protected updateBoard(prevX: number, prevY: number, newX: number, newY: number): void {
-    this.chessBoard.move(prevX, prevY, newX, newY, this.promotedPiece);
-    if (this.promotedPiece) {
-      console.info(`Promoted piece selected ${this.promotedPiece}`);
-    }
+  protected updateBoard(prevX: number, prevY: number, newX: number, newY: number, promotedPiece: FENChar | null): void {
+    this.chessBoard.move(prevX, prevY, newX, newY, promotedPiece);
     this.chessBoardView = this.chessBoard.ChessBoardView;
     this.checkState = this.chessBoard.checkedState;
     this.lastMove = this.chessBoard.lastMove;
 
     // resets the selected chessboard square and clears safe move dots
     this.unmarkPreviouslySelectedAndSafeSquares();
+    this.chessBoardService.chessBoardState$.next(this.chessBoard.boardAsFEN)
   }
 
   public promotePiece(piece: FENChar): void {
@@ -149,11 +150,10 @@ export class BoardComponent {
     this.promotedPiece = piece;
     const { x: newX, y: newY } = this.promotionCoords;
     const { x: prevX, y: prevY } = this.selectedSquare;
-    this.updateBoard(prevX, prevY, newX, newY);
+    this.updateBoard(prevX, prevY, newX, newY, this.promotedPiece);
   }
 
   public closePawnPromotionDialog(): void {
-    console.info("closing promotion dialog");
     this.unmarkPreviouslySelectedAndSafeSquares();
   }
 
@@ -181,5 +181,10 @@ export class BoardComponent {
     } else {
       return false;
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe();
+    this.chessBoardService.chessBoardState$.next(FENConverter.initalPosition);
   }
 }

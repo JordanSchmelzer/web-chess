@@ -14,7 +14,7 @@ import { firstValueFrom, Subscription } from 'rxjs';
 })
 
 export class ComputerModeComponent extends BoardComponent implements OnInit, OnDestroy {
-  private subscriptions$ = new Subscription();
+  private computerSubscriptions$ = new Subscription();
 
   constructor(private stockfishService: StockfishService) {
     super(inject(ChessBoardService));
@@ -27,15 +27,15 @@ export class ComputerModeComponent extends BoardComponent implements OnInit, OnD
         if (player === "w") return;
 
         const { prevX, prevY, newX, newY, promotedPiece } = await firstValueFrom(this.stockfishService.getBestMove(FEN));
-        // TODO: impliment promoted piece into update board
-        //this.updateBoard(prevX, prevY, newX, newY);
+        this.updateBoard(prevX, prevY, newX, newY, promotedPiece);
       }
     });
 
-    this.subscriptions$.add(chessBoardStateSubscription$);
+    this.computerSubscriptions$.add(chessBoardStateSubscription$);
   }
 
-  public ngOnDestroy(): void {
-    this.subscriptions$.unsubscribe();
+  public override ngOnDestroy(): void {
+    super.ngOnDestroy();
+    this.computerSubscriptions$.unsubscribe();
   }
 }

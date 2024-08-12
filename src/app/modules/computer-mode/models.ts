@@ -1,9 +1,8 @@
-import { FENChar } from "../../chess-logic/models";
+import { Color, FENChar } from "../../chess-logic/models";
 
 export type StockfishQueryParams = {
     fen: string;
     depth: number;
-    mode: string;
 }
 
 export type ChessMove = {
@@ -16,5 +15,21 @@ export type ChessMove = {
 
 export type StockfishResponse = {
     success: boolean;
-    data: string;
+    evaluation: number | null;
+    mate: number | null;
+    bestmove: string,
+    continuation: string
+}
+
+export type ComputerConfiguration = {
+    color: Color;
+    level: number;
+}
+
+export const stockfishLevels: Readonly<Record<number, number>> = {
+    1: 10,
+    2: 11,
+    3: 12,
+    4: 13,
+    5: 15
 }

@@ -3,8 +3,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { RouterLink, RouterModule } from '@angular/router';
 import { BoardComponent } from "../board/board.component";
-import { Routes } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-nav-menu',
@@ -15,7 +15,8 @@ import { RouterLinkActive } from '@angular/router';
     RouterModule,
     BoardComponent,
     RouterLinkActive,
-    RouterLink],
+    RouterLink,
+    MatDialogModule],
   templateUrl: './nav-menu.component.html',
   styleUrl: './nav-menu.component.css'
 })

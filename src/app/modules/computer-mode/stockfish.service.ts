@@ -1,14 +1,16 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, switchMap } from 'rxjs';
-import { ChessMove, StockfishQueryParams, StockfishResponse } from './models';
-import { FENChar } from '../../chess-logic/models';
+import { Observable, of, switchMap, BehaviorSubject } from 'rxjs';
+import { ChessMove, StockfishQueryParams, StockfishResponse, stockfishLevels, ComputerConfiguration } from './models';
+import { FENChar, Color } from '../../chess-logic/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockfishService {
   private readonly api: string = "https://stockfish.online/api/s/v2.php";
+
+  public computerConfiguration$ = new BehaviorSubject<ComputerConfiguration>({ color: Color.Black, level: 1 });
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +20,7 @@ export class StockfishService {
 
   private promotedPiece(piece: string | undefined): FENChar | null {
     if (!piece) return null;
+    const computerColor: Color = this.computerConfiguration$.value.color;
     if (piece === "n") return FENChar.BlackKnight;
     if (piece === "b") return FENChar.BlackBishop;
     if (piece === "b") return FENChar.BlackRook;
@@ -36,16 +39,17 @@ export class StockfishService {
   public getBestMove(fen: string): Observable<ChessMove> {
     const queryParams: StockfishQueryParams = {
       fen,
-      depth: 13,
-      mode: "bestmove"
+      depth: stockfishLevels[this.computerConfiguration$.value.level],
     };
 
     let params = new HttpParams().appendAll(queryParams);
 
+    console.info("sending stockfish http get");
     return this.http.get<StockfishResponse>(this.api, { params })
       .pipe(
         switchMap(response => {
-          const bestMove = response.data.split(" ")[1];
+          console.info(response.bestmove);
+          const bestMove = response.bestmove.split(" ")[1];
           return of(this.moveFromStockfishString(bestMove));
         })
       );

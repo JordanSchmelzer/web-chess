@@ -239,7 +239,6 @@ export class ChessBoard {
 
             }
         }
-        console.info(`found ${safeSquares.size} safe squares`);
         return safeSquares;
     }
 
@@ -338,7 +337,6 @@ export class ChessBoard {
         this.handlingSpecialMoves(piece, prevX, prevY, newX, newY);
         // update the board;
         if (promotedPieceType) {
-            console.info(`The promoted piece is: ${promotedPieceType}`);
             this.chessBoard[newX][newY] = this.promotedPiece(promotedPieceType);
         } else {
             this.chessBoard[newX][newY] = piece;

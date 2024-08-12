@@ -13,4 +13,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 export class PlayAgainstComputerDialogComponent {
   public stockfishLevels: readonly number[] = [1, 2, 3, 4, 5];
   public stockfishLevel: number = 1;
+
+
 }
