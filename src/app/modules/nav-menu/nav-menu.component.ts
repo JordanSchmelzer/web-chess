@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { RouterLink, RouterModule } from '@angular/router';
 import { BoardComponent } from "../board/board.component";
 import { RouterLinkActive } from '@angular/router';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { PlayAgainstComputerDialogComponent } from '../play-against-computer-dialog/play-against-computer-dialog.component';
 
 @Component({
   selector: 'app-nav-menu',
@@ -22,4 +23,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 })
 export class NavMenuComponent {
 
+  constructor(private dialog: MatDialog) {
+
+  }
+
+  public playAgainstComputer(): void {
+    console.log("clicked");
+    this.dialog.open(PlayAgainstComputerDialogComponent);
+  }
 }
