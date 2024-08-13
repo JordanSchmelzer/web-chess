@@ -17,7 +17,7 @@ import { FENConverter } from '../../chess-logic/FENConverter';
 })
 export class BoardComponent {
   public pieceImagePaths = pieceImagePaths;
-  private chessBoard = new ChessBoard();
+  protected chessBoard = new ChessBoard();
   public chessBoardView: (FENChar | null)[][] = this.chessBoard.ChessBoardView;
   public get playerColor(): Color { return this.chessBoard.playerColor; };
   public get safeSquares(): SafeSquares { return this.chessBoard.safeSquares; };

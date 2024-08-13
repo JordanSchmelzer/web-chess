@@ -21,6 +21,9 @@
 .king-img {
     width: 70px;
     cursor: pointer;
+    background-color: rgb(190, 179, 179);
+    border-radius: 15px;
+    object-position: -4px -4px;
 }
 
 .selected {

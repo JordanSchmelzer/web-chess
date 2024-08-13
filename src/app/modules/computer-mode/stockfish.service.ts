@@ -21,10 +21,10 @@ export class StockfishService {
   private promotedPiece(piece: string | undefined): FENChar | null {
     if (!piece) return null;
     const computerColor: Color = this.computerConfiguration$.value.color;
-    if (piece === "n") return FENChar.BlackKnight;
-    if (piece === "b") return FENChar.BlackBishop;
-    if (piece === "b") return FENChar.BlackRook;
-    return FENChar.BlackQueen;
+    if (piece === "n") return computerColor === Color.White ? FENChar.WhiteKnight : FENChar.BlackKnight;
+    if (piece === "b") return computerColor === Color.White ? FENChar.WhiteBishop : FENChar.BlackBishop;
+    if (piece === "r") return computerColor === Color.White ? FENChar.WhiteRook : FENChar.BlackRook;
+    return computerColor === Color.White ? FENChar.WhiteQueen : FENChar.BlackQueen;
   }
 
   private moveFromStockfishString(move: string): ChessMove {
