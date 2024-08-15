@@ -35,6 +35,7 @@ export class BoardComponent {
   public flipMode: boolean = false;
   private subscriptions$ = new Subscription();
 
+
   constructor(protected chessBoardService: ChessBoardService) { }
 
   public flipBoard(): void {

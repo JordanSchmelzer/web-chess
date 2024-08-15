@@ -1,4 +1,4 @@
-import { Color, FENChar, SafeSquares, Coords, LastMove, CheckState } from "./models";
+import { Color, FENChar, SafeSquares, Coords, LastMove, CheckState, MoveType, MoveList, GameHistory, columns } from "./models";
 import { Piece } from "./pieces/piece";
 import { Rook } from "./pieces/rook";
 import { Pawn } from "./pieces/pawn";
@@ -27,10 +27,14 @@ export class ChessBoard {
     private _boardAsFEN: string = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     private FENConverter = new FENConverter();
 
+    private _moveList: MoveList = [];
+    private _gameHistory: GameHistory;
+
     constructor() {
         this.chessBoard = this.initializeChessBoard();
         this._playerColor = Color.White;
         this._safeSquares = this.findSafeSquares();
+        this._gameHistory = [{ board: this.ChessBoardView, lastMove: this._lastMove, checkState: this._checkedState }];
     }
 
     public get checkedState(): CheckState {
@@ -39,6 +43,14 @@ export class ChessBoard {
 
     public get isGameOver(): boolean {
         return this._isGameOver;
+    }
+
+    public get moveList(): MoveList {
+        return this._moveList;
+    }
+
+    public get gameHistory(): GameHistory {
+        return this._gameHistory;
     }
 
     public get gameOverMesage(): string | undefined {
@@ -330,14 +342,20 @@ export class ChessBoard {
         if ((piece instanceof Pawn || piece instanceof Rook || piece instanceof King) && !piece.hasMoved)
             piece.hasMoved = true;
 
+
+        const moveType = new Set<MoveType>();
+
+
         const isPieceTaken: boolean = this.chessBoard[newX][newY] !== null;
+        if (isPieceTaken) moveType.add(MoveType.Capture);
         if (piece instanceof Pawn || isPieceTaken) this.fiftyMoveRuleCounter = 0;
         else this.fiftyMoveRuleCounter += 0.5;
 
-        this.handlingSpecialMoves(piece, prevX, prevY, newX, newY);
+        this.handlingSpecialMoves(piece, prevX, prevY, newX, newY, moveType);
         // update the board;
         if (promotedPieceType) {
             this.chessBoard[newX][newY] = this.promotedPiece(promotedPieceType);
+            moveType.add(MoveType.Promotion);
         } else {
             this.chessBoard[newX][newY] = piece;
         }
@@ -347,8 +365,16 @@ export class ChessBoard {
         // switch players;
         this._playerColor = this._playerColor === Color.White ? Color.Black : Color.White;
         this.isInCheck(this._playerColor, true);
-        this._lastMove = { prevX, prevY: prevY, currX: newX, currY: newY, piece: piece }
+
+
+        this._lastMove = { prevX, prevY: prevY, currX: newX, currY: newY, piece: piece, moveType };
         this._safeSquares = this.findSafeSquares();
+
+        if (this._checkedState.isInCheck)
+            moveType.add(!this._safeSquares.size ? MoveType.CheckMate : MoveType.Check);
+        else if (!moveType.size)
+            moveType.add(MoveType.BasicMove);
+
 
         if (this._playerColor === Color.White) this.fullNumberOfMoves++;
         this._boardAsFEN = this.FENConverter.convertBoardToFen(this.chessBoard, this._playerColor, this._lastMove, this.fiftyMoveRuleCounter, this.fullNumberOfMoves);
@@ -357,7 +383,7 @@ export class ChessBoard {
         this._isGameOver = this.isGameFinished();
     }
 
-    private handlingSpecialMoves(piece: Piece, prevX: number, prevY: number, newX: number, newY: number): void {
+    private handlingSpecialMoves(piece: Piece, prevX: number, prevY: number, newX: number, newY: number, moveType: Set<MoveType>): void {
         if (piece instanceof King && Math.abs(newY - prevY) === 2) {
             // newY > prevY === king side castle
 
@@ -368,6 +394,7 @@ export class ChessBoard {
             this.chessBoard[rookPositionX][rookPositionY] = null;
             this.chessBoard[rookPositionX][rookNewPositionY] = rook;
             rook.hasMoved = true;
+            moveType.add(MoveType.Castling);
         } else if (
             piece instanceof Pawn &&
             this._lastMove &&
@@ -377,6 +404,7 @@ export class ChessBoard {
             newY === this._lastMove.currY
         ) {
             this.chessBoard[this._lastMove.currX][this._lastMove.currY] = null;
+            moveType.add(MoveType.Capture);
         }
     }
 
@@ -497,5 +525,30 @@ export class ChessBoard {
             }
             this.threeFoldRepititionDictionary.set(threeFoldRepetitionFENKey, 2);
         }
+    }
+
+    private storeMove(promotedPiece: FENChar | null): void {
+        const { piece, currX, currY, prevX, prevY, moveType } = this._lastMove!;
+        let pieceName: string = !(piece instanceof Pawn) ? piece.FENChar : "";
+        let move: string;
+
+        if (moveType.has(MoveType.Castling))
+            move = currY - prevY === 2 ? "O-O" : "O-O-O";
+        else {
+            move = pieceName + columns[prevY] + String(prevX + 1);
+            if (moveType.has(MoveType.Capture)) move += "x";
+            move += columns[currY] + String(currX + 1);
+
+            if (promotedPiece)
+                move += "=" + promotedPiece.toUpperCase();
+        }
+
+        if (moveType.has(MoveType.Check)) move += "+";
+        else if (moveType.has(MoveType.CheckMate)) move += "#";
+
+        if (!this._moveList[this.fullNumberOfMoves - 1])
+            this._moveList[this.fullNumberOfMoves - 1] = [move];
+        else
+            this._moveList[this.fullNumberOfMoves - 1].push(move);
     }
 }
