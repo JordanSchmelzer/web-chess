@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
 import { ChessBoard } from '../../chess-logic/chess-board';
-import { Color, FENChar, LastMove, pieceImagePaths, SafeSquares, CheckState } from '../../chess-logic/models';
+import { Color, FENChar, LastMove, pieceImagePaths, SafeSquares, CheckState, MoveList } from '../../chess-logic/models';
 import { NgFor, NgClass, NgIf } from '@angular/common';
 import { SelectedSquare } from './modules';
 import { Coords } from '../../chess-logic/models';
 import { ChessBoardService } from './chess-board.service';
 import { Subscription } from 'rxjs';
 import { FENConverter } from '../../chess-logic/FENConverter';
+import { MoveListComponent } from "../move-list/move-list.component";
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [NgFor, NgClass, NgIf],
+  imports: [NgFor, NgClass, NgIf, MoveListComponent],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })
@@ -35,6 +36,8 @@ export class BoardComponent {
   public flipMode: boolean = false;
   private subscriptions$ = new Subscription();
 
+
+  public get moveList(): MoveList { return this.chessBoard.moveList };
 
   constructor(protected chessBoardService: ChessBoardService) { }
 

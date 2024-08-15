@@ -13,7 +13,7 @@ import { PlayAgainstComputerDialogComponent } from './modules/play-against-compu
     BoardComponent,
     ComputerModeComponent,
     RouterLink,
-    PlayAgainstComputerDialogComponent
+    PlayAgainstComputerDialogComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

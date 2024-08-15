@@ -5,11 +5,12 @@ import { ChessBoardService } from '../board/chess-board.service';
 import { CommonModule } from '@angular/common';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { Color } from '../../chess-logic/models';
+import { MoveListComponent } from '../move-list/move-list.component';
 
 @Component({
   selector: 'app-computer-mode',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MoveListComponent],
   templateUrl: '../board/board.component.html',
   styleUrl: '../board/board.component.css'
 })
