@@ -7,6 +7,7 @@ import { firstValueFrom, Subscription } from 'rxjs';
 import { Color } from '../../chess-logic/models';
 import { MoveListComponent } from '../move-list/move-list.component';
 
+
 @Component({
   selector: 'app-computer-mode',
   standalone: true,
@@ -22,7 +23,8 @@ export class ComputerModeComponent extends BoardComponent implements OnInit, OnD
     super(inject(ChessBoardService));
   }
 
-  public ngOnInit(): void {
+  public override ngOnInit(): void {
+    super.ngOnInit();
     const computerSubscriptions$: Subscription = this.stockfishService.computerConfiguration$.subscribe({
       next: (computerConfiguration) => {
         if (computerConfiguration.color === Color.White) this.flipBoard();

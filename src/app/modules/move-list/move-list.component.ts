@@ -12,15 +12,12 @@ import { MoveList } from '../../chess-logic/models';
   styleUrl: './move-list.component.css'
 })
 export class MoveListComponent {
-  //@Input({ required: true }) public moveList!: MoveList;
-  //@Input({ required: true }) public gameHistoryPointer: number = 0;
-  //public moveList!: MoveList;
-  //public gameHistoryPointer: number = 0
-  //public gameHistoryLength: number = 1;
-  //@Input({ required: true }) public gameHistoryLength: number = 1;
-  //@Output() public showPreviousPositionEvent = new EventEmitter<number>();
+  @Input({ required: true }) public moveList!: MoveList;
+  @Input({ required: true }) public gameHistoryPointer: number = 0;
+  @Input({ required: true }) public gameHistoryLength: number = 1;
+  @Output() public showPreviousPositionEvent = new EventEmitter<number>();
 
-  //public showPreviousPosition(moveIndex: number): void {
-  //this.showPreviousPositionEvent.emit(moveIndex);
-  //}
+  public showPreviousPosition(moveIndex: number): void {
+    this.showPreviousPositionEvent.emit(moveIndex);
+  }
 }

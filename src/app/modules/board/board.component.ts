@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChessBoard } from '../../chess-logic/chess-board';
-import { Color, FENChar, LastMove, pieceImagePaths, SafeSquares, CheckState, MoveList } from '../../chess-logic/models';
+import { Color, FENChar, LastMove, pieceImagePaths, SafeSquares, CheckState, MoveList, GameHistory, MoveType } from '../../chess-logic/models';
 import { NgFor, NgClass, NgIf } from '@angular/common';
 import { SelectedSquare } from './modules';
 import { Coords } from '../../chess-logic/models';
 import { ChessBoardService } from './chess-board.service';
-import { Subscription } from 'rxjs';
+import { filter, fromEvent, Subscription, tap } from 'rxjs';
 import { FENConverter } from '../../chess-logic/FENConverter';
 import { MoveListComponent } from "../move-list/move-list.component";
 
@@ -16,7 +16,7 @@ import { MoveListComponent } from "../move-list/move-list.component";
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })
-export class BoardComponent {
+export class BoardComponent implements OnInit, OnDestroy {
   public pieceImagePaths = pieceImagePaths;
   protected chessBoard = new ChessBoard();
   public chessBoardView: (FENChar | null)[][] = this.chessBoard.ChessBoardView;
@@ -37,7 +37,45 @@ export class BoardComponent {
   private subscriptions$ = new Subscription();
 
 
+  public ngOnInit(): void {
+    const keyEventSubscription$: Subscription = fromEvent<KeyboardEvent>(document, "keyup")
+      .pipe(
+        filter(event => event.key === "ArrowRight" || event.key === "ArrowLeft"),
+        tap(event => {
+          switch (event.key) {
+            case "ArrowRight":
+              if (this.gameHistoryPointer === this.gameHistory.length - 1) return;
+              this.gameHistoryPointer++;
+              break;
+            case "ArrowLeft":
+              if (this.gameHistoryPointer === 0) return;
+              this.gameHistoryPointer--;
+              break;
+            default:
+              break;
+          }
+
+          this.showPreviousPosition(this.gameHistoryPointer);
+        })
+      )
+      .subscribe();
+
+    this.subscriptions$.add(keyEventSubscription$);
+  }
+
+  private markLastMoveAndCheckState(lastMove: LastMove | undefined, checkState: CheckState) {
+    this.lastMove = lastMove;
+    this.checkState = checkState;
+
+    if (this.lastMove)
+      this.moveSound(this.lastMove.moveType);
+    else
+      this.moveSound(new Set<MoveType>([MoveType.BasicMove]));
+  }
+
+  public get gameHistory(): GameHistory { return this.chessBoard.gameHistory; }
   public get moveList(): MoveList { return this.chessBoard.moveList };
+  public gameHistoryPointer: number = 0;
 
   constructor(protected chessBoardService: ChessBoardService) { }
 
@@ -141,12 +179,12 @@ export class BoardComponent {
   protected updateBoard(prevX: number, prevY: number, newX: number, newY: number, promotedPiece: FENChar | null): void {
     this.chessBoard.move(prevX, prevY, newX, newY, promotedPiece);
     this.chessBoardView = this.chessBoard.ChessBoardView;
-    this.checkState = this.chessBoard.checkedState;
-    this.lastMove = this.chessBoard.lastMove;
+    this.markLastMoveAndCheckState(this.chessBoard.lastMove, this.chessBoard.checkedState);
 
     // resets the selected chessboard square and clears safe move dots
     this.unmarkPreviouslySelectedAndSafeSquares();
     this.chessBoardService.chessBoardState$.next(this.chessBoard.boardAsFEN)
+    this.gameHistoryPointer++;
   }
 
   public promotePiece(piece: FENChar): void {
@@ -190,5 +228,25 @@ export class BoardComponent {
   public ngOnDestroy(): void {
     this.subscriptions$.unsubscribe();
     this.chessBoardService.chessBoardState$.next(FENConverter.initalPosition);
+  }
+
+  public showPreviousPosition(moveIndex: number): void {
+    const { board, checkState, lastMove } = this.gameHistory[moveIndex];
+    this.chessBoardView = board;
+    this.markLastMoveAndCheckState(lastMove, checkState);
+    this.gameHistoryPointer = moveIndex;
+  }
+
+  private moveSound(moveType: Set<MoveType>): void {
+    const moveSound = new Audio("assets/sound/move.mp3");
+
+    if (moveType.has(MoveType.Promotion)) moveSound.src = "assets/sound/promote.mp3";
+    else if (moveType.has(MoveType.Capture)) moveSound.src = "assets/sound/capture.mp3";
+    if (moveType.has(MoveType.Castling)) moveSound.src = "assets/sound/castling.mp3"
+
+    if (moveType.has(MoveType.CheckMate)) moveSound.src = "assets/sound/mate.mp3";
+    else if (moveType.has(MoveType.Check)) moveSound.src = "assets/sound/check.mp3";
+
+    moveSound.play();
   }
 }
