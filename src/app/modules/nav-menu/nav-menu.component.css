@@ -1,6 +1,23 @@
+.wrapper {
+    width: 75vw;
+    min-width: 700px;
+}
+
+/* Banner Title*/
+
 .game-title {
     background-color: rgb(40, 190, 140);
-    height: 80px;
+}
+
+.game-title:hover {
+    animation: pulse 30s infinite;
+}
+
+/* Menu buttons*/
+
+.nav-menu {
+    border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem;
 }
 
 .start-computer {
@@ -8,5 +25,49 @@
 }
 
 .start-local {
-    background-color: cadetblue;
+    background-color: rgb(170, 164, 156);
+}
+
+.clicked {
+    opacity: 100%;
+}
+
+.not-clicked {
+    opacity: 65%;
+}
+
+/* Animations */
+
+@keyframes pulse {
+    0% {
+        background-color: rgb(76, 228, 177);
+    }
+
+    15% {
+        background-color: rgb(39, 160, 197);
+    }
+
+    30% {
+        background-color: rgb(150, 53, 241);
+    }
+
+    45% {
+        background-color: rgb(195, 9, 219);
+    }
+
+    60% {
+        background-color: rgb(230, 87, 87);
+    }
+
+    75% {
+        background-color: rgb(226, 128, 36);
+    }
+
+    90% {
+        background-color: rgb(204, 233, 98);
+    }
+
+    100% {
+        background-color: rgb(40, 190, 140);
+    }
 }

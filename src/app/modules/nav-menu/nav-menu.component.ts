@@ -6,6 +6,8 @@ import { BoardComponent } from "../board/board.component";
 import { RouterLinkActive } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PlayAgainstComputerDialogComponent } from '../play-against-computer-dialog/play-against-computer-dialog.component';
+import { ClickedButton } from './modules';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-nav-menu',
@@ -13,6 +15,7 @@ import { PlayAgainstComputerDialogComponent } from '../play-against-computer-dia
   imports: [
     MatToolbarModule,
     MatButtonModule,
+    NgClass,
     RouterModule,
     BoardComponent,
     RouterLinkActive,
@@ -22,13 +25,19 @@ import { PlayAgainstComputerDialogComponent } from '../play-against-computer-dia
   styleUrl: './nav-menu.component.css'
 })
 export class NavMenuComponent {
+  public clickedButton: ClickedButton = { button: 'PvP' };
 
   constructor(private dialog: MatDialog) {
 
   }
 
+
+  public playAgainstPlayer(): void {
+    this.clickedButton = { button: "PvP" };
+  }
+
   public playAgainstComputer(): void {
-    console.log("clicked");
+    this.clickedButton = { button: "PvE" };
     this.dialog.open(PlayAgainstComputerDialogComponent);
   }
 }

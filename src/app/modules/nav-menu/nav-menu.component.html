@@ -1,22 +1,28 @@
-<div class="game-title">
-    <pre>
+<div class="wrapper">
+    <div class="game-title">
+        <pre>
                  __     __       ________                  
-        | |     / /__  / /_     / ____/ /_  ___  __________
-        | | /| / / _ \/ __ \   / /   / __ \/ _ \/ ___/ ___/
-        | |/ |/ /  __/ /_/ /  / /___/ / / /  __(__  |__  ) 
-        |__/|__/\___/_.___/   \____/_/ /_/\___/____/____/                          
+        | |     / /__  / /_     / ____/ /_  ___  __________          
+        | | /| / / _ \/ __ \   / /   / __ \/ _ \/ ___/ ___/             𓆝 𓆟 𓆞 𓆟 𓆝
+        | |/ |/ /  __/ /_/ /  / /___/ / / /  __(__  |__  )          Stockfish V2 Edition!
+        |__/|__/\___/_.___/   \____/_/ /_/\___/____/____/           _-_-_-_-_-_-_-_-_-_-_               
     </pre>
+    </div>
+
+    <mat-toolbar class="nav-menu">
+        <button mat-button class="start-local" (click)="playAgainstPlayer()" routerLink="/against-friend"
+            routerLinkActive="active" [ngClass]="clickedButton.button == 'PvP' ? 'clicked' : 'not-clicked'">
+            Play against friend
+        </button>
+        <span> ----- </span>
+        <button mat-button class="start-computer" (click)="playAgainstComputer()"
+            [ngClass]="clickedButton.button == 'PvE' ? 'clicked' : 'not-clicked'">
+
+            Play against computer
+        </button>
+    </mat-toolbar>
+
+
+    <router-outlet></router-outlet>
+
 </div>
-
-<mat-toolbar>
-    <button mat-button class="start-local" routerLink="/against-friend" routerLinkActive="active">
-        Play against friend
-    </button>
-    <span> ----- </span>
-    <button mat-button class="start-computer" (click)="playAgainstComputer()">
-        Play against computer
-    </button>
-</mat-toolbar>
-
-
-<router-outlet></router-outlet>
