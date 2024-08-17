@@ -1,5 +1,5 @@
 .move-list {
-    max-height: 100px;
+    max-height: 600px;
     overflow-y: scroll;
     display: flex;
     flex-direction: column-reverse;
@@ -25,7 +25,7 @@
 }
 
 .current-move {
-    background-color: rgb(0, 143, 168);
+    background-color: rgb(8, 216, 71);
 }
 
 .move {
@@ -34,6 +34,6 @@
 }
 
 .move:hover {
-    background-color: rgb(0, 143, 168);
+    background-color: rgb(3, 223, 113);
     opacity: 0.7
 }
