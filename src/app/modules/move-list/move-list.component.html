@@ -1,7 +1,9 @@
-<div>
-    <button mat-icon-button color="primary" [disabled]="gameHistoryPointer === 0" (click)="showPreviousPosition(0)">
-        <mat-icon>first_page</mat-icon>
-    </button>
+<div class="move-icons">
+    <div>
+        <button mat-icon-button color="primary" [disabled]="gameHistoryPointer === 0" (click)="showPreviousPosition(0)">
+            <mat-icon>first_page</mat-icon>
+        </button>
+    </div>
 
     <button mat-icon-button color="primary" [disabled]="gameHistoryPointer === 0"
         (click)="showPreviousPosition(gameHistoryPointer - 1)">

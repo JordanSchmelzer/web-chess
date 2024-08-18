@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { RouterLink, RouterModule } from '@angular/router';
-import { BoardComponent } from "../board/board.component";
 import { RouterLinkActive } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PlayAgainstComputerDialogComponent } from '../play-against-computer-dialog/play-against-computer-dialog.component';
@@ -17,7 +16,6 @@ import { NgClass } from '@angular/common';
     MatButtonModule,
     NgClass,
     RouterModule,
-    BoardComponent,
     RouterLinkActive,
     RouterLink,
     MatDialogModule],

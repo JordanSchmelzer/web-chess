@@ -1,0 +1,13 @@
+.power-bar {
+    width: 30px;
+    height: 640px;
+    transition: background 1s ease;
+}
+
+.white-bar-percentage {
+    background-color: lightgray;
+}
+
+.black-bar-percentage {
+    background-color: green;
+}

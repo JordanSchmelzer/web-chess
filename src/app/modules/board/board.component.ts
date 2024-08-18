@@ -8,14 +8,22 @@ import { ChessBoardService } from './chess-board.service';
 import { filter, fromEvent, Subscription, tap } from 'rxjs';
 import { FENConverter } from '../../chess-logic/FENConverter';
 import { MoveListComponent } from "../move-list/move-list.component";
+import { PowerBarComponent } from "../power-bar/power-bar.component";
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [NgFor, NgClass, NgIf, MoveListComponent],
+  imports:
+    [NgFor,
+      NgClass,
+      NgIf,
+      MoveListComponent,
+      PowerBarComponent
+    ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })
+
 export class BoardComponent implements OnInit, OnDestroy {
   public pieceImagePaths = pieceImagePaths;
   protected chessBoard = new ChessBoard();
@@ -23,6 +31,13 @@ export class BoardComponent implements OnInit, OnDestroy {
   public get playerColor(): Color { return this.chessBoard.playerColor; };
   public get safeSquares(): SafeSquares { return this.chessBoard.safeSquares; };
   public get gameOverMessage(): string | undefined { return this.chessBoard.gameOverMesage; };
+
+  public get whitePiecesTaken(): number {
+    return 16 - this.chessBoard.whitePiecesRemaining;
+  }
+  public get blackPiecesTaken(): number {
+    return 16 - this.chessBoard.blackPiecesRemaining;
+  }
 
   private selectedSquare: SelectedSquare = { piece: null };
   private pieceSafeSquares: Coords[] = [];
@@ -35,7 +50,6 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   public flipMode: boolean = false;
   private subscriptions$ = new Subscription();
-
 
   public ngOnInit(): void {
     const keyEventSubscription$: Subscription = fromEvent<KeyboardEvent>(document, "keyup")

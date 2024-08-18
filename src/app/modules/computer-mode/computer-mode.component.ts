@@ -1,19 +1,20 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { BoardComponent } from '../board/board.component';
 import { StockfishService } from './stockfish.service';
 import { ChessBoardService } from '../board/chess-board.service';
-import { CommonModule } from '@angular/common';
-import { firstValueFrom, Subscription } from 'rxjs';
 import { Color } from '../../chess-logic/models';
 import { MoveListComponent } from '../move-list/move-list.component';
+import { PowerBarComponent } from '../power-bar/power-bar.component';
 
 
 @Component({
   selector: 'app-computer-mode',
   standalone: true,
-  imports: [CommonModule, MoveListComponent],
+  imports: [CommonModule, MoveListComponent, PowerBarComponent],
   templateUrl: '../board/board.component.html',
-  styleUrl: '../board/board.component.css'
+  styleUrl: '../board/board.component.css',
 })
 
 export class ComputerModeComponent extends BoardComponent implements OnInit, OnDestroy {

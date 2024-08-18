@@ -5,6 +5,12 @@
     flex-direction: column-reverse;
 }
 
+.move-icons {
+    display: flex;
+    justify-content: center;
+    min-width: 250px;
+}
+
 .move-list::-webkit-scrollbar {
     display: none;
 }

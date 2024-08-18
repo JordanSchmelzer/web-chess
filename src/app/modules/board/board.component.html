@@ -41,4 +41,10 @@
             [gameHistoryLength]="gameHistory.length" (showPreviousPositionEvent)="showPreviousPosition($event)">
         </app-move-list>
     </div>
+
+    <div class="child">
+        <app-power-bar [whitePiecesTaken]="this.whitePiecesTaken" [blackPiecesTaken]="this.blackPiecesTaken">
+
+        </app-power-bar>
+    </div>
 </div>

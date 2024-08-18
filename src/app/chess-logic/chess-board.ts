@@ -37,6 +37,40 @@ export class ChessBoard {
         this._gameHistory = [{ board: this.ChessBoardView, lastMove: this._lastMove, checkState: this._checkedState }];
     }
 
+    public get whitePoints(): number {
+        return 1;
+    }
+
+    public get blackPoints(): number {
+        return 1;
+    }
+
+    public get whitePiecesRemaining(): number {
+        let whitePiecesCount = 0;
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                let boardPositionColor = this.chessBoard[row][col]?.color;
+                if (boardPositionColor != undefined)
+                    if (boardPositionColor == Color.White)
+                        whitePiecesCount++;
+            }
+        }
+        return whitePiecesCount;
+    }
+
+    public get blackPiecesRemaining(): number {
+        let blackPiecesCount = 0;
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                let boardPositionColor = this.chessBoard[row][col]?.color;
+                if (boardPositionColor != undefined)
+                    if (boardPositionColor == Color.Black)
+                        blackPiecesCount++;
+            }
+        }
+        return blackPiecesCount;
+    }
+
     public get checkedState(): CheckState {
         return this._checkedState;
     }
