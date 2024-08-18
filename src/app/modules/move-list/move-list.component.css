@@ -1,8 +1,10 @@
 .move-list {
-    max-height: 600px;
+    border-radius: .25rem;
+    max-height: 640px;
     overflow-y: scroll;
     display: flex;
     flex-direction: column-reverse;
+    background-color: rgb(49, 51, 53);
 }
 
 .move-icons {
