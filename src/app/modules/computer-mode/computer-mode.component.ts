@@ -7,6 +7,9 @@ import { ChessBoardService } from '../board/chess-board.service';
 import { Color } from '../../chess-logic/models';
 import { MoveListComponent } from '../move-list/move-list.component';
 import { PowerBarComponent } from '../power-bar/power-bar.component';
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { Platform } from '@angular/cdk/platform';
+
 
 
 @Component({
@@ -21,7 +24,8 @@ export class ComputerModeComponent extends BoardComponent implements OnInit, OnD
   private computerSubscriptions$ = new Subscription();
 
   constructor(private stockfishService: StockfishService) {
-    super(inject(ChessBoardService));
+    super(inject(ChessBoardService), inject(PLATFORM_ID));
+
   }
 
   public override ngOnInit(): void {

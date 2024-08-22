@@ -1,6 +1,5 @@
 .wrapper {
-    width: 55vw;
-    min-width: 800px;
+    max-width: 100vw;
 }
 
 /* Banner Title*/
@@ -10,7 +9,7 @@
 }
 
 .game-title:hover {
-    animation: pulse 30s infinite;
+    animation: pulse 7s infinite;
 }
 
 /* Menu buttons*/

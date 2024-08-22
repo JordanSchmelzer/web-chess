@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ChessBoard } from '../../chess-logic/chess-board';
 import { Color, FENChar, LastMove, pieceImagePaths, SafeSquares, CheckState, MoveList, GameHistory, MoveType } from '../../chess-logic/models';
 import { NgFor, NgClass, NgIf } from '@angular/common';
@@ -9,6 +9,9 @@ import { filter, fromEvent, Subscription, tap } from 'rxjs';
 import { FENConverter } from '../../chess-logic/FENConverter';
 import { MoveListComponent } from "../move-list/move-list.component";
 import { PowerBarComponent } from "../power-bar/power-bar.component";
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { Platform } from '@angular/cdk/platform';
 
 @Component({
   selector: 'app-board',
@@ -51,31 +54,35 @@ export class BoardComponent implements OnInit, OnDestroy {
   public flipMode: boolean = false;
   private subscriptions$ = new Subscription();
 
+
   public ngOnInit(): void {
-    const keyEventSubscription$: Subscription = fromEvent<KeyboardEvent>(document, "keyup")
-      .pipe(
-        filter(event => event.key === "ArrowRight" || event.key === "ArrowLeft"),
-        tap(event => {
-          switch (event.key) {
-            case "ArrowRight":
-              if (this.gameHistoryPointer === this.gameHistory.length - 1) return;
-              this.gameHistoryPointer++;
-              break;
-            case "ArrowLeft":
-              if (this.gameHistoryPointer === 0) return;
-              this.gameHistoryPointer--;
-              break;
-            default:
-              break;
-          }
+    if (isPlatformBrowser(this.platformId)) {
+      const keyEventSubscription$: Subscription = fromEvent<KeyboardEvent>(window, "keyup")
+        .pipe(
+          filter(event => event.key === "ArrowRight" || event.key === "ArrowLeft"),
+          tap(event => {
+            switch (event.key) {
+              case "ArrowRight":
+                if (this.gameHistoryPointer === this.gameHistory.length - 1) return;
+                this.gameHistoryPointer++;
+                break;
+              case "ArrowLeft":
+                if (this.gameHistoryPointer === 0) return;
+                this.gameHistoryPointer--;
+                break;
+              default:
+                break;
+            }
 
-          this.showPreviousPosition(this.gameHistoryPointer);
-        })
-      )
-      .subscribe();
+            this.showPreviousPosition(this.gameHistoryPointer);
+          })
+        )
+        .subscribe();
 
-    this.subscriptions$.add(keyEventSubscription$);
+      this.subscriptions$.add(keyEventSubscription$);
+    }
   }
+
 
   private markLastMoveAndCheckState(lastMove: LastMove | undefined, checkState: CheckState) {
     this.lastMove = lastMove;
@@ -91,7 +98,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public get moveList(): MoveList { return this.chessBoard.moveList };
   public gameHistoryPointer: number = 0;
 
-  constructor(protected chessBoardService: ChessBoardService) { }
+  constructor(protected chessBoardService: ChessBoardService, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   public flipBoard(): void {
     this.flipMode = !this.flipMode;

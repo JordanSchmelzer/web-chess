@@ -1,14 +1,14 @@
 <div class="parent">
-    <div class="child">
+    <div class="row">
         <div class="chess-board" [ngClass]="{'rotated': flipMode}">
             <div *ngFor="let row of chessBoardView; let x = index" class="row">
                 <div *ngFor="let piece of row; let y = index" class="square" [ngClass]="{'dark':isSquareDark(x,y),
-                    'light': !isSquareDark(x,y),
-                    'selected-square': isSquareSelected(x,y),
-                    'last-move': isSquareLastMove(x,y),
-                    'king-in-check':isSquareChecked(x,y),
-                    'promotion-square': isSquarepromotionSquare(x,y)
-        }" (click)="move(x,y)">
+                        'light': !isSquareDark(x,y),
+                        'selected-square': isSquareSelected(x,y),
+                        'last-move': isSquareLastMove(x,y),
+                        'king-in-check':isSquareChecked(x,y),
+                        'promotion-square': isSquarepromotionSquare(x,y)
+            }" (click)="move(x,y)">
 
                     <img *ngIf="isMoveEnemyPieceCapture(x,y)" src="./take-icon.png" alt="capture-icon"
                         class="movement-icon" [ngClass]="{'rotated': flipMode}" />
@@ -21,30 +21,30 @@
             </div>
         </div>
 
-        <button class="flip-button" (click)="flipBoard()">Flip Board</button>
+        <div class="child">
+            <app-move-list [moveList]="moveList" [gameHistoryPointer]="gameHistoryPointer"
+                [gameHistoryLength]="gameHistory.length" (showPreviousPositionEvent)="showPreviousPosition($event)">
+            </app-move-list>
+        </div>
 
-        <h2 *ngIf="gameOverMessage" class="game-over-message">
-            {{gameOverMessage}}
-        </h2>
+        <div class="child">
+            <app-power-bar [whitePiecesTaken]="this.whitePiecesTaken" [blackPiecesTaken]="this.blackPiecesTaken">
 
-        <div *ngIf="isPromotionActive" class="promotion-dialog">
-            <img *ngFor="let piece of promotionPieces()" [src]="pieceImagePaths[piece]" (click)="promotePiece(piece)">
-
-            <span class="close-promotion-dialog" (click)="closePawnPromotionDialog()">
-                &times;
-            </span>
+            </app-power-bar>
         </div>
     </div>
 
-    <div class="child">
-        <app-move-list [moveList]="moveList" [gameHistoryPointer]="gameHistoryPointer"
-            [gameHistoryLength]="gameHistory.length" (showPreviousPositionEvent)="showPreviousPosition($event)">
-        </app-move-list>
-    </div>
+    <button class="flip-button" (click)="flipBoard()">Flip Board</button>
 
-    <div class="child">
-        <app-power-bar [whitePiecesTaken]="this.whitePiecesTaken" [blackPiecesTaken]="this.blackPiecesTaken">
+    <h2 *ngIf="gameOverMessage" class="game-over-message">
+        {{gameOverMessage}}
+    </h2>
 
-        </app-power-bar>
+    <div *ngIf="isPromotionActive" class="promotion-dialog">
+        <img *ngFor="let piece of promotionPieces()" [src]="pieceImagePaths[piece]" (click)="promotePiece(piece)">
+
+        <span class="close-promotion-dialog" (click)="closePawnPromotionDialog()">
+            &times;
+        </span>
     </div>
 </div>

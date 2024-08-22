@@ -3,9 +3,12 @@
 }
 
 .child {
-    display: inline-block;
-    vertical-align: top;
     padding: .5rem .5rem;
+}
+
+.row {
+    display: table;
+    table-layout: fixed;
 }
 
 .grid-container {
